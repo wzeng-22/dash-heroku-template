@@ -270,5 +270,5 @@ def make_figure(x, y, color):
         opacity = .25
 )
 
-if _name_ == '_main_': 
-  app.run_server(debug=True, port=8050)
+if __name__ == '__main__':
+    app.run_server(debug=True)
