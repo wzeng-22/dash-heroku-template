@@ -197,7 +197,7 @@ anes_ft = anes[ft_columns + cat_columns].dropna()
 
 ### Create app
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
+server = app.server
 
 app.layout = html.Div(
     [
