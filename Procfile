@@ -1,1 +1,1 @@
-web: gunicorn app.py $PORT --log-file -
+web: gunicorn app:server --log-file=-
