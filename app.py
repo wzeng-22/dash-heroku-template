@@ -236,20 +236,31 @@ app.layout = html.Div(
         html.H2("Feeling Thermometer Scatterplot"),
         
         html.Div([
+            
             html.H3("x-axis feature"),
+            
             dcc.Dropdown(id='x-axis',
                          options=[{'label': i, 'value': i} for i in ft_columns],
-                     value='ftbiden'),
+                         value='ftbiden'),
+            
             html.H3("y-axis feature"),
+            
             dcc.Dropdown(id='y-axis',
                          options=[{'label': i, 'value': i} for i in ft_columns],
                          value='fttrump'),
+            
             html.H3("colors"),
+            
             dcc.Dropdown(id='color',
-                         options=[{'label': i, 'value': i} for i in cat_columns],
-                         value=None)], style={"width": "25%", "float": "left"}),
+                         options=[{'label': i, 'value': i} for i in cat_columns])
         
-        html.Div([dcc.Graph(id="graph", style={"width": "70%", "display": "inline-block"})])
+        ], style={'width': '25%', 'float': 'left'}),
+        
+        html.Div([
+            
+            dcc.Graph(id="graph")
+        
+        ], style={'width': '70%', 'float': 'right'})
     
     ]
 )
@@ -269,6 +280,7 @@ def make_figure(x, y, color):
         height=700,
         opacity = .25
 )
+
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8051, host='0.0.0.0')
