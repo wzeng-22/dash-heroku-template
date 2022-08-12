@@ -1,98 +1,64 @@
-# extra credit assignment for hw 12: DS 6001:
-# responding to challenges # 1 and 3:
-
-import numpy as np
-import pandas as pd
-import plotly.graph_objects as go
-import plotly.express as px
-import plotly.graph_objects as go
-import plotly.figure_factory as ff
+# change this to see if it works:
 import dash
-
-#import dash_renderer
-#import gunicorn
-
-#from jupyter_dash import JupyterDash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
+import plotly.graph_objs as go
+
+########### Define your variables
+beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
+ibu_values=[35, 60, 85, 75]
+abv_values=[5.4, 7.1, 9.2, 4.3]
+color1='darkred'
+color2='orange'
+mytitle='Beer Comparison'
+tabtitle='beer!'
+myheading='Flying Dog Beers'
+label1='IBU'
+label2='ABV'
+githublink='https://github.com/austinlasseter/flying-dog-beers'
+sourceurl='https://www.flyingdog.com/beers/'
+
+########### Set up the chart
+bitterness = go.Bar(
+    x=beers,
+    y=ibu_values,
+    name=label1,
+    marker={'color':color1}
+)
+alcohol = go.Bar(
+    x=beers,
+    y=abv_values,
+    name=label2,
+    marker={'color':color2}
+)
+
+beer_data = [bitterness, alcohol]
+beer_layout = go.Layout(
+    barmode='group',
+    title = mytitle
+)
+
+beer_fig = go.Figure(data=beer_data, layout=beer_layout)
+
+
+########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
-# reading in data frame and cleaning it:
-
-#%%capture
-gss = pd.read_csv("https://github.com/jkropko/DS-6001/raw/master/localdata/gss2018.csv",
-                 encoding='cp1252', na_values=['IAP','IAP,DK,NA,uncodeable', 'NOT SURE',
-                                               'DK', 'IAP, DK, NA, uncodeable', '.a', "CAN'T CHOOSE"])
-
-
-
-mycols = ['id', 'wtss', 'sex', 'educ', 'region', 'age', 'coninc',
-          'prestg10', 'mapres10', 'papres10', 'sei10', 'satjob',
-          'fechld', 'fefam', 'fepol', 'fepresch', 'meovrwrk'] 
-gss_clean = gss[mycols]
-gss_clean = gss_clean.rename({'wtss':'weight', 
-                              'educ':'education', 
-                              'coninc':'income', 
-                              'prestg10':'job_prestige',
-                              'mapres10':'mother_job_prestige', 
-                              'papres10':'father_job_prestige', 
-                              'sei10':'socioeconomic_index', 
-                              'fechld':'relationship', 
-                              'fefam':'male_breadwinner', 
-                              'fehire':'hire_women', 
-                              'fejobaff':'preference_hire_women', 
-                              'fepol':'men_bettersuited', 
-                              'fepresch':'child_suffer',
-                              'meovrwrk':'men_overwork'},axis=1)
-gss_clean.age = gss_clean.age.replace({'89 or older':'89'})
-gss_clean.age = gss_clean.age.astype('float')
-
-
-markdown_text='''
-This is my work for extra credit homework 12, answering challenges # 1 and 3:
-
-
-'''
-
-
-# answering challenge 1 and 3:
-# extra credit figure: group the relationship variable by region:
-
-
-# creating figure: facet bar graph: for extra credit question 1:
-
-
-
-
-# second figure for extra credit:
-# analyzing the socioeconomic index by gender:
-fig_e2 = px.histogram(gss_clean, x='socioeconomic_index', nbins=60, marginal='box', color ='sex',
-                   labels={'socioeconomic_index':'score of socioeconomic index'},
-                   title = 'Distribution of score of socioeconomic index by gender')
-fig_e2.update(layout=dict(title=dict(x=0.5)))
-fig_e2.show()
-
-
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
+app.title=tabtitle
 
-
-app.layout = html.Div(
-    [
-        #this is displaying to the dashboard to Heroku       
-        
-        
-        
-        html.H2("Distributions of score of socioeconomic index by gender"),
-        
-        dcc.Graph(figure=fig_e2),
-        
-    
-    
+########### Set up the layout
+app.layout = html.Div(children=[
+    html.H1(myheading),
+    dcc.Graph(
+        id='flyingdog',
+        figure=beer_fig
+    ),
+    html.A('Code on Github', href=githublink),
+    html.Br(),
+    html.A('Data Source', href=sourceurl),
     ]
 )
 
 if __name__ == '__main__':
-    app.run_server( debug=True)
-
-
+    app.run_server()
