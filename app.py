@@ -58,10 +58,6 @@ This is my work for extra credit homework 12, answering challenges # 1 and 3:
 
 # answering challenge 1 and 3:
 # extra credit figure: group the relationship variable by region:
-gss_plot = gss_clean.groupby(['region', 'relationship']).size().reset_index()
-gss_plot = gss_plot.rename({0:'count'}, axis=1)
-gss_plot
-
 
 
 # creating figure: facet bar graph: for extra credit question 1:
