@@ -9,8 +9,8 @@ import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import dash
 
-import dash-renderer
-import gunicorn
+#import dash_renderer
+#import gunicorn
 
 #from jupyter_dash import JupyterDash
 import dash_core_components as dcc
