@@ -38,17 +38,19 @@ color1='darkred'
 color2='orange'
 color3='navy'
 color4='blue'
+
 mytitle='Opinion Comparison by region'
 tabtitle='opinion on working mothers relationship with kids'
 myheading='Opinion Comparison on working mothers relationship with kids by region'
+heading2='This is my first Heroku app, by WenWei Zeng, DS6001 student'
 
 label1='strongly disagree'
 label2='disagree'
 label3='agree'
 label4='strongly agree'
 
-githublink='https://github.com/austinlasseter/flying-dog-beers'
-sourceurl='https://www.flyingdog.com/beers/'
+githublink='https://github.com/wzeng-22/dash-heroku-template'
+sourceurl='https://github.com/jkropko/DS-6001/raw/master/localdata/gss2018.csv'
 
 ########### Set up the chart
 bitterness = go.Bar(
@@ -96,6 +98,7 @@ app.title=tabtitle
 ########### Set up the layout
 app.layout = html.Div(children=[
     html.H1(myheading),
+    html.H5(heading2),
     dcc.Graph(
         id='flyingdog',
         figure=gss_fig
@@ -104,6 +107,7 @@ app.layout = html.Div(children=[
     html.Br(),
     html.A('Data Source', href=sourceurl),
     ]
+                     
 )
 
 if __name__ == '__main__':
